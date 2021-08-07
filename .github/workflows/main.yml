@@ -23,15 +23,16 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: git setting
       run: |
-        git config --local user.email ${EMAIL}
         git config --local user.name ${NAME}
+        git config --local user.email ${EMAIL}
+        git remote set-url origin https://${NAME}:${{ secrets.PASS }}@github.com/${NAME}/${REPO}
+      env:
+        NAME: nokotaro
+        EMAIL: takenoko@mail.nokotaro.com
+        REPO: write-code-everyday-bot
     - name: npm install, build, and test
       run: |
         npm install
-        git remote set-url origin https://${NAME}:${{ secrets.PASS }}@github.com/${NAME}/${REPO}
-        git branch
-        git checkout master
-        git branch
         ./omikuji.sh >> README.md
     - name: Commit files
       run: |
@@ -39,7 +40,3 @@ jobs:
         git commit -m "update" -a
         git pull
         git push origin master
-      env:
-        NAME: nokotaro
-        EMAIL: takenoko@mail.nokotaro.com
-        REPO: write-code-everyday-bot
