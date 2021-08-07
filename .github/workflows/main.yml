@@ -21,10 +21,11 @@ jobs:
       uses: actions/setup-node@master
       with:
         node-version: ${{ matrix.node-version }}
-    - name: git setting
+    - name: Git setting
       run: |
         git config --local user.name ${NAME}
         git config --local user.email ${EMAIL}
+        git config --local pull.rebase true
         git remote set-url origin https://${NAME}:${{ secrets.PASS }}@github.com/${NAME}/${REPO}
       env:
         NAME: nokotaro
